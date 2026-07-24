@@ -1,8 +1,9 @@
 import { registry } from "zod";
 import { prisma } from "../lib/prisma";
 
-export async function getAll() {
+export async function getAll(filter = {}) {
     const data = await prisma.furniture.findMany({
+        where: filter,
         select: {
             id: true,
             description: true,

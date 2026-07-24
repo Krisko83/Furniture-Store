@@ -1,7 +1,7 @@
 import { furnituresRepository } from "../repositories";
 
-export function getAll(){
-    return furnituresRepository.getAll();
+export function getAll(filter){
+    return furnituresRepository.getAll(filter);
 };
 
 export function create(data) { 

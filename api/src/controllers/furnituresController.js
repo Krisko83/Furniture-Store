@@ -1,9 +1,20 @@
 import { CreateFurnitureSchema } from "../schemas/furnituresSchemas";
 import { furnituresService } from "../services";
 import { getErrorMessage } from "../utils/errorsUtils";
+import querystring from 'querystring';
 
 export async function getAll(req, res) {
-    const data = await furnituresService.getAll(); 
+    let filter = {};
+
+    const reqQuery = req.query.where;
+ 
+    if(reqQuery) {
+        const result = querystring.parse(reqQuery.replaceAll('"',''))
+       
+        filter.ownerId = result._ownerId;       
+    };
+    
+    const data = await furnituresService.getAll(filter); 
     
     res.json(data);
 };
@@ -51,4 +62,8 @@ export async function remove(req, res){
     const deletedFurniture = await furnituresService.remove(furnitureId);
 
     res.json(deletedFurniture);
+}
+
+export async function getMyFurniture(req, res) {
+    
 }
