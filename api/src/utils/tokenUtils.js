@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+const invalidTokens = [];
 
 export function generateToken(user) {
     const payLoad = { userId: user.id, email: user.email};
@@ -7,4 +8,10 @@ export function generateToken(user) {
     return authToken;
 }
 
- 
+ export function addInvalidToken(token) {
+    return invalidTokens.push(token);
+};
+
+export function isTokenValid(token) {
+    return invalidTokens.includes(token);
+};

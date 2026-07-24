@@ -12,7 +12,7 @@ export async function getAll(filter = {}) {
             ownerId: true
         }
     });
-   
+ 
     return data.map(f => ({ ...f, _id: f.id, _ownerId: f.ownerId }));
 };
 
@@ -27,7 +27,8 @@ export async function create(furnitureData) {
 export async function getById(furnitureId) {
     const furniture = await prisma.furniture.findUnique({
         where: { id: furnitureId }
-    })
+    });
+ 
     furniture._id = furniture.id;
     furniture._ownerId = furniture.ownerId;
 

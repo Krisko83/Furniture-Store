@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { getErrorMessage } from "../utils/errorsUtils";
+import { isTokenValid } from "../utils/tokenUtils";
 
 
 export function authMiddleware(req, res, next) {
@@ -10,6 +11,10 @@ export function authMiddleware(req, res, next) {
     };
 
     try {
+        if(isTokenValid(token)) {
+            return res.status(401).json('The token has been invalidated!')
+        };
+
         const decodedToken = jwt.verify(token, process.env.AUTH_SECRET);
         
         req.user = decodedToken;
