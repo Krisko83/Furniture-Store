@@ -9,6 +9,8 @@ routes.post('/users/login', authController.login);
 routes.get('/users/logout', isAuth, authController.logout);
 routes.get('/data/catalog', furnituresControllers.getAll);
 routes.post('/data/catalog', isAuth, furnituresControllers.create);
-routes.get('/data/catalog/:furnitureId', furnituresControllers.getById)
+routes.get('/data/catalog/:furnitureId', furnituresControllers.getById);
+routes.put('/data/catalog/:furnitureId',isAuth, furnituresControllers.edit);
+routes.delete('/data/catalog/:furnitureId',isAuth, furnituresControllers.remove);
 
 export default routes;

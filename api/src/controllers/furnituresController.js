@@ -3,8 +3,7 @@ import { furnituresService } from "../services";
 import { getErrorMessage } from "../utils/errorsUtils";
 
 export async function getAll(req, res) {
-    const data = await furnituresService.getAll();
-        console.log(data);
+    const data = await furnituresService.getAll(); 
     
     res.json(data);
 };
@@ -17,15 +16,14 @@ export async function create(req, res) {
         const newFurniture = CreateFurnitureSchema.parse(data);
         newFurniture.ownerId = ownerId;
 
-        const result = await furnituresService.create(newFurniture);
-  
-
-        res.status(201).json({ message: 'Furniture created', furniture: result });
+        const furniture = await furnituresService.create(newFurniture);
+ 
+        res.status(201).json({ message: 'Furniture created', furniture});
 
     } catch (err) {
         const error = getErrorMessage(err);
-
-        res.json({ message: error.message })
+      
+        res.status(400).json({ message: error})
     }
 }
 
@@ -33,7 +31,24 @@ export async function getById(req, res) {
     const furnitureId = req.params.furnitureId;
 
     const furniture = await furnituresService.getById(furnitureId);
-
+ 
     res.json(furniture)
 
 } 
+
+export async function edit(req,res ) {
+    const editData = req.body;
+    const furnitureId = req.params.furnitureId;
+
+    const editedFurniture = await furnituresService.edit(editData, furnitureId);
+
+    res.json(editedFurniture);
+}
+
+export async function remove(req, res){
+    const furnitureId = req.params.furnitureId;
+
+    const deletedFurniture = await furnituresService.remove(furnitureId);
+
+    res.json(deletedFurniture);
+}
